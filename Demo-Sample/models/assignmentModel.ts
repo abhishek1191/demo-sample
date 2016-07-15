@@ -16,10 +16,10 @@ export class AssignmentModel {
     dsl:RSDSLModel;
 
     @field()
-    type: string;
+    model: string;
 
     @field()
-    typeId: string;
+    modelId: string;
 
 
 }

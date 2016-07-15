@@ -13,7 +13,14 @@ export class RSDSLModel {
     _id: Types.ObjectId;
 
     @field()
-    dsl: string;
+    name: string;
+
+    @field()
+    definition: string;
+
+    @field()
+    expression: string;
+    
 
 }
 export default RSDSLModel;

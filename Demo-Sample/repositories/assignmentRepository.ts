@@ -33,14 +33,14 @@ export default class AssignmentRepository extends DynamicRepository {
             .then((assignmentObj:AssignmentModel)=> {
                 //get model and repo(assignRepo) from node data using this type (assignModel)
                 //todo : write framework service to get repo here. don't use repositoryMap directly
-                var assignedRepo = repositoryMap()[assignmentObj.type].repo;
+                var assignedRepo = repositoryMap()[assignmentObj.model].repo;
                 //assignRepo.findone(assignId)
-                return assignedRepo.findOne(assignmentObj.typeId).then((assignedModel) => {
+                return assignedRepo.findOne(assignmentObj.modelId).then((assignedModel) => {
                     //execute DSL on the assigned model
                     return this.executionService.executeDSL(assignmentObj.dsl, assignedModel);
                 }).then((assignedModel)=> {
                     //save assignedModel back
-                    return assignedRepo.put(assignmentObj.typeId, assignedModel);
+                    return assignedRepo.put(assignmentObj.modelId, assignedModel);
                 }).then((result)=> {
                     //post the results to execution model
                     let executionModel = new DSLExecutionModel();
