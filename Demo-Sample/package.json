@@ -13,6 +13,11 @@
   },
   "devDependencies": {
     "gulp-livereload": "^3.8.1",
-    "gulp-nodemon": "^2.0.6"
+    "gulp-nodemon": "^2.0.6",
+    "q": "^1.4.1",
+    "antlr4": "^4.5.3",
+    "dependency-injection": "^2.3.3",
+    "linq": "^3.0.5",
+    "require-from-string": "^1.2.0"
   }
 }

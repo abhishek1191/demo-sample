@@ -4,7 +4,7 @@
 import * as decorator from "nodedata/core/decorators/repository";
 import {AssignmentModel} from '../models/assignmentModel';
 import {DynamicRepository} from 'nodedata/core/dynamic/dynamic-repository';
-import RSDSLRepository from "./rsDSLRepository";
+import * as RSDSLRepository from "./rsDSLRepository";
 import {service, inject} from 'nodedata/di/decorators';
 import {RSDSLModel} from "../models/rsDSLModel";
 import DSLExecutionRepository from "./dslExecutionRepository";
@@ -18,8 +18,8 @@ import {DSLExecutionModel} from "../models/dslExecutionModel";
 
 export default class AssignmentRepository extends DynamicRepository {
 
-    @inject()
-    rsDSLRepository:RSDSLRepository;
+    @inject(RSDSLRepository)
+    rsDSLRepository:RSDSLRepository.RSDSLRepository;
 
     @inject()
     dslExecutionRepository:DSLExecutionRepository;

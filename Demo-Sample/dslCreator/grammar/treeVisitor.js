@@ -6,9 +6,11 @@ var classObj;
 function TreeVisitor(constant) {
 
     var classString = 'var Enumerable = require(\"linq\");';
+    var className;
     classObj = this;
     classObj.embeddeddsls = [];
-    classObj.constant = constant
+    classObj.constant = constant;
+    classObj.className;
     baseClass.call(this);
     classObj.appendToClass = function(toAppend){
         classString = classString + toAppend;
@@ -20,6 +22,7 @@ function TreeVisitor(constant) {
     // 'name =' ID NEWLINE inputs NEWLINE (stat)+;
     classObj.visitProg = function(ctx) {
         var name = ctx.ID().getText();
+        classObj.className = name;
         str = "function "+ name + "(){";
         classObj.appendToClass(str);
         var classString = 'this.getName = function(){return "' + name + '";};';
