@@ -1,0 +1,14 @@
+dslname = ChangedJob;
+person = <Person>;
+{
+    person = %AgeCrossed% person, 30;
+	person.jobChanged = false;
+    if(person.ageCrossed)
+    {
+        if(person.current.title != person.History[0].title)
+         {
+            person.jobChanged = true;
+         }
+    }
+	return person;
+}
