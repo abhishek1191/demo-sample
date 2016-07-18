@@ -14,8 +14,8 @@ export class RSDSLRepository extends DynamicRepository {
     @inject(DSLService)
     dslService : DSLService.dslService
     
-    public doCreateDSL(){
-        this.dslService.createDSL().then((result) =>{
+    public doCreateDSL(expression){
+        this.dslService.createDSL(expression).then((result) =>{
             return result;
         }).catch((err) => {
             console.log(err.message);

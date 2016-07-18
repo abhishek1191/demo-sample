@@ -53,7 +53,7 @@ export class dslService{
             let DSLAssignmentObj : AssignmentModel = new AssignmentModel();
             DSLAssignmentObj.dsl = result;
             DSLAssignmentObj.model = "rsICPerson";
-            DSLAssignmentObj.modelId= "" ;
+            DSLAssignmentObj.modelId= "578622d85c2fbc1027ca507e" ;
            return _self.dslAssignmentRepository.post(DSLAssignmentObj);
         }).catch((err) => {
             return err;
