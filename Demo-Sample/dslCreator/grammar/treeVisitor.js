@@ -4,7 +4,7 @@ var classObj;
 
 
 function TreeVisitor(constant) {
-
+   console.log('abc')
     var classString = 'var Enumerable = require(\"linq\");';
     var className;
     classObj = this;
@@ -21,6 +21,7 @@ function TreeVisitor(constant) {
 
     // 'name =' ID NEWLINE inputs NEWLINE (stat)+;
     classObj.visitProg = function(ctx) {
+        console.log('df');
         var name = ctx.ID().getText();
         classObj.className = name;
         str = "function "+ name + "(){";

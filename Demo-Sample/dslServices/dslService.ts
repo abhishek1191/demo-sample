@@ -30,40 +30,37 @@ export class dslService{
     @inject()
     dslAssignmentRepository : AssignmentRepository;
 
-    public createDSL(){
+    public createDSL(expression){
         var _self = this;
-       return fs.readFile('D:\\Learning\\dslSetup\\demo-sample\\Demo-Sample\\dslCreator\\t.expr', 'utf8', function(err, contents) {
-            var input = contents;
-            var chars = new antlr4.InputStream(input);
-            var lexer = new RealSocialableGrammarLexer(chars);
-            var tokens  = new antlr4.CommonTokenStream(lexer);
-            var parser = new RealSocialableGrammarParser(tokens);
-            parser.buildParseTrees = true;
-            var tree = parser.prog();// 'block' is the start rule
-            treeVisitor.visitProg(tree);
+        var input = expression;
+        var chars = new antlr4.InputStream(input);
+        var lexer = new RealSocialableGrammarLexer(chars);
+        var tokens  = new antlr4.CommonTokenStream(lexer);
+        var parser = new RealSocialableGrammarParser(tokens);
+        parser.buildParseTrees = true;
+        var tree = parser.prog();// 'block' is the start rule
+        treeVisitor.visitProg(tree);
 
-            var codeString = treeVisitor.getClassString();
-            var virtualModule = requireFromString(codeString);
+        var codeString = treeVisitor.getClassString();
+        var virtualModule = requireFromString(codeString);
 
-            let rsDSLObj:RSDSLModel = new RSDSLModel();
-            rsDSLObj.name = treeVisitor.className;
-            rsDSLObj.definition = codeString;
-            rsDSLObj.expression = input;
+        let rsDSLObj:RSDSLModel = new RSDSLModel();
+        rsDSLObj.name = treeVisitor.className;
+        rsDSLObj.definition = codeString;
+        rsDSLObj.expression = input;
 
-           return _self.rsDSLRepository.post(rsDSLObj).then((result:RSDSLModel)=>{
-                let DSLAssignmentObj : AssignmentModel = new AssignmentModel();
-                DSLAssignmentObj.dsl = result;
-                DSLAssignmentObj.model = "rsICPerson";
-                DSLAssignmentObj.modelId= "" ;
-               return _self.dslAssignmentRepository.post(DSLAssignmentObj);
-            }).catch((err) => {
-                return err;
-            });
-
+       return _self.rsDSLRepository.post(rsDSLObj).then((result:RSDSLModel)=>{
+            let DSLAssignmentObj : AssignmentModel = new AssignmentModel();
+            DSLAssignmentObj.dsl = result;
+            DSLAssignmentObj.model = "rsICPerson";
+            DSLAssignmentObj.modelId= "" ;
+           return _self.dslAssignmentRepository.post(DSLAssignmentObj);
+        }).catch((err) => {
+            return err;
+        });
             //content = user expression, code string is dsl output, for the integration model is rsperson, modelid is person id
             //save dsl in the dsl
             //assign to all the person (lets have 5 person in the table)
-        });
     }
 
 
