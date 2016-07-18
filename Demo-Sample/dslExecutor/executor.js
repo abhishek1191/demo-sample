@@ -16,14 +16,38 @@ var requireFromString = require('require-from-string');
 //    console.log('Server running on 8080...');
 //});
 
-function Executor(dslId, inputObject) {
-    this.execute = function () {
+//var input = rsDsl.definition;
+//var virtualModule = requireFromString(input);
+//var obj = new virtualModule();
+//purgeCache("./executor.js");
+
+function Executor() {
+    this.execute = function (rsDslId, inputObject) {
         var defer = q.defer();
-        dslChain(dslId, 0).then(function(data){
-            data.init(inputObject);
-            data.main();
-            defer.resolve(data);
-        });
+        // getdslbyId.then(function(rslDsl){
+        var input = rsDsl.definition;
+        var virtualModule = requireFromString(input);
+        var obj = new virtualModule();
+        purgeCache("./executor.js");
+        var embeddedDsls = obj.embeddedDsls();
+        if(embeddedDsls.length > 0){
+            embeddedDsls.forEach(function(dsl) {
+                promises.push(dslChain(dsl, level + 1));
+            });
+            q.all(promises).then(function(data){
+                var dslObject = createDslObject(data, input, level);
+                dslObject.init(inputObject);
+                inputObject = dslObject.main();
+                defer.resolve(inputObject);
+            });
+        }
+        else
+        {
+            obj.init(inputObject);
+            inputObject = obj.main();
+            defer.resolve(inputObject);
+        }
+        //}
         return defer.promise;
     }
 }
@@ -32,11 +56,10 @@ function replaceAll(str, find, replace) {
     return str.replace(new RegExp(find, 'g'), replace);
 }
 
-function dslChain(dslId, level){
+function dslChain(dslName, level) {
     var defer = q.defer();
-    // get dsl
-    fs.readFile(file, 'utf8', function(err, contents) {
-        var input = contents;
+    //getDslByName(dslName).then(function(childRsDsl){
+        var input = childRsDsl.definition;
         var virtualModule = requireFromString(input);
         var obj = new virtualModule();
         purgeCache("./executor.js");
@@ -53,7 +76,7 @@ function dslChain(dslId, level){
         else{
             defer.resolve(obj);
         }
-    });
+    //});
     return defer.promise;
 }
 
