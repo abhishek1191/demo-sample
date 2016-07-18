@@ -37,7 +37,7 @@ export default class AssignmentRepository extends DynamicRepository {
                 //assignRepo.findone(assignId)
                 return assignedRepo.findOne(assignmentObj.modelId).then((assignedModel) => {
                     //execute DSL on the assigned model
-                    return this.executionService.executeDSL(assignmentObj.dsl, assignedModel);
+                    return this.executionService.executeDSL(assignmentObj.dsl._id, assignedModel);
                 }).then((assignedModel)=> {
                     //save assignedModel back
                     return assignedRepo.put(assignmentObj.modelId, assignedModel);

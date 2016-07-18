@@ -9,7 +9,7 @@ import {service,inject} from 'nodedata/di/decorators';
 
 @decorator.repository({ path: 'rsDSL', model: RSDSLModel })
 
-export  class RSDSLRepository extends DynamicRepository {
+export class RSDSLRepository extends DynamicRepository {
 
     @inject(DSLService)
     dslService : DSLService.dslService
