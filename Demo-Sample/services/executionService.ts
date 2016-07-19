@@ -25,7 +25,7 @@ export class ExecutionService {
            var input = rsDsl.definition;
            var virtualModule = requireFromString(input);
            var obj = new virtualModule();
-           _self.purgeCache("./executor.js");
+           _self.purgeCache("./executionService.js");
            var embeddedDsls = obj.embeddedDsls();
            if (embeddedDsls.length > 0) {
                embeddedDsls.forEach(function (dsl) {
@@ -66,7 +66,7 @@ export class ExecutionService {
             //console.log(mainDslContent);
             dicList[variableName] = embeddedDslObj[i];
         }
-        _self.purgeCache('./executor.js');
+        _self.purgeCache('./executionService.js');
 
         //for(var i= 0; i< require.cache[require.resolve('./executor.js')].children.length;)
         var dslClass =  requireFromString(mainDslContent);
@@ -127,7 +127,7 @@ export class ExecutionService {
             var input = childRsDsl.definition;
             var virtualModule = requireFromString(input);
             var obj = new virtualModule();
-            _self.purgeCache("./executor.js");
+            _self.purgeCache("./executionService.js");
             if(obj.embeddedDsls().length > 0){
                 var promises = [];
                 obj.embeddedDsls().forEach(function(dsl) {

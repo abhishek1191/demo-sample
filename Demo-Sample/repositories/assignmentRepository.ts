@@ -28,9 +28,11 @@ export default class AssignmentRepository extends DynamicRepository {
     executionService:ExecutionService;
 
     doExecuteDSL(assignmentId:string) {
-
-        return this.findOne(assignmentId)
-            .then((assignmentObj:AssignmentModel)=> {
+        let executionModel = new DSLExecutionModel();
+        executionModel.status = 1;
+        executionModel.success = false;
+        return this.dslExecutionRepository.post(executionModel).then((executionObj) => {
+            return this.findOne(assignmentId).then((assignmentObj:AssignmentModel)=> {
                 //get model and repo(assignRepo) from node data using this type (assignModel)
                 //todo : write framework service to get repo here. don't use repositoryMap directly
                 var assignedRepo = repositoryMap()[assignmentObj.model].repo;
@@ -43,14 +45,18 @@ export default class AssignmentRepository extends DynamicRepository {
                     return assignedRepo.put(assignmentObj.modelId, assignedModel);
                 }).then((result)=> {
                     //post the results to execution model
-                    let executionModel = new DSLExecutionModel();
-                    executionModel.response = result;
-                    executionModel.status = 1;
+                    executionObj.response = result;
+                    executionModel.status = 2;
                     executionModel.success = true;
-                    return this.dslExecutionRepository.post(executionModel);
-                })
+                    return this.dslExecutionRepository.put(executionObj._id, executionModel);
+                });
             }).catch((err)=> {
-                return err;
-            })
+                executionObj.response = err;
+                executionModel.status = 2;
+                executionModel.success = true;
+                return this.dslExecutionRepository.put(executionObj._id, executionModel);
+            });
+        });
+
     }
 }

@@ -19,7 +19,6 @@ var di = require("../dslCreator/DI");
 
 var RealSocialableGrammarParser = require("../dslCreator/grammar/RealSocialableGrammarParser.js").RealSocialableGrammarParser;
 var RealSocialableGrammarLexer = require("../dslCreator/grammar/RealSocialableGrammarLexer.js").RealSocialableGrammarLexer;
-var treeVisitor = di.getInstance("TreeVisitor");
 
 @service()
 export class dslService{
@@ -31,6 +30,7 @@ export class dslService{
     dslAssignmentRepository : AssignmentRepository;
 
     public createDSL(expression){
+        var treeVisitor = di.getInstance("TreeVisitor");
         var _self = this;
         var input = expression;
         var chars = new antlr4.InputStream(input);
