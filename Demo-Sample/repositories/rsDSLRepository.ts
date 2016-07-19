@@ -12,15 +12,13 @@ import {service,inject} from 'nodedata/di/decorators';
 export class RSDSLRepository extends DynamicRepository {
 
     @inject(DSLService)
-    dslService : DSLService.dslService
+    dslService : DSLService.dslService;
     
     public doCreateDSL(expression){
-        this.dslService.createDSL(expression).then((result) =>{
+        return this.dslService.createDSL(expression)
+        .then((result) =>{
             return result;
-        }).catch((err) => {
-            console.log(err.message);
-            return err;
-        })
+        });
     }
 
 }

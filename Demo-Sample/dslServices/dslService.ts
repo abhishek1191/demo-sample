@@ -49,15 +49,14 @@ export class dslService{
         rsDSLObj.definition = codeString;
         rsDSLObj.expression = input;
 
-       return _self.rsDSLRepository.post(rsDSLObj).then((result:RSDSLModel)=>{
-            let DSLAssignmentObj : AssignmentModel = new AssignmentModel();
-            DSLAssignmentObj.dsl = result;
-            DSLAssignmentObj.model = "rsICPerson";
-            DSLAssignmentObj.modelId= "578622d85c2fbc1027ca507e" ;
-           return _self.dslAssignmentRepository.post(DSLAssignmentObj);
-        }).catch((err) => {
-            return err;
-        });
+       return _self.rsDSLRepository.post(rsDSLObj);
+    // .then((result:RSDSLModel)=>{
+    //         let DSLAssignmentObj : AssignmentModel = new AssignmentModel();
+    //         DSLAssignmentObj.dsl = result;
+    //         DSLAssignmentObj.model = "rsICPerson";
+    //         DSLAssignmentObj.modelId= "578622d85c2fbc1027ca507e" ;
+    //        return _self.dslAssignmentRepository.post(DSLAssignmentObj);
+    //     });
             //content = user expression, code string is dsl output, for the integration model is rsperson, modelid is person id
             //save dsl in the dsl
             //assign to all the person (lets have 5 person in the table)
