@@ -252,7 +252,7 @@ function TreeVisitor(constant) {
             // check if the field is array
 
            var clause = classObj.visit(ctx.enumrableclauses());
-            exprStr =  'Enumerable.from(' + fieldName + ').Where(function (x) { if(' + clause +'){return x;}});'
+            exprStr =  'Enumerable.from(' + fieldName + ').where(function (x) { if(' + clause +'){return x;}});'
         }
         else if(classObj.visit(ctx.keyword()) == 'any'){
             var fieldName = classObj.visit(ctx.field());
@@ -261,7 +261,7 @@ function TreeVisitor(constant) {
             // check if the field is array
 
             var clause = classObj.visit(ctx.enumrableclauses());
-            exprStr =  'Enumerable.from(' + fieldName + ').Any(function (x) { if(' + clause +'){return true;}});'
+            exprStr =  'Enumerable.from(' + fieldName + ').any(function (x) { if(' + clause +'){return true;}});'
         }
 
         str += exprStr;
